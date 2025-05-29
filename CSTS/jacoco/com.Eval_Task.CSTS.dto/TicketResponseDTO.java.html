@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketResponseDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSTS</a> &gt; <a href="index.source.html" class="el_package">com.Eval_Task.CSTS.dto</a> &gt; <span class="el_source">TicketResponseDTO.java</span></div><h1>TicketResponseDTO.java</h1><pre class="source lang-java linenums">package com.Eval_Task.CSTS.dto;
+
+import com.Eval_Task.CSTS.model.Ticket;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+//public class TicketResponseDTO {
+//    private Long id;
+//    private String title;
+//    private String status;
+//    // other simple fields
+//
+//    // constructor from Ticket entity
+//    public TicketResponseDTO(Ticket ticket) {
+//        this.id = ticket.getId();
+//        this.title = ticket.getTitle();
+//        this.status = ticket.getStatus();
+//        // don't include lazy-loaded relationships
+//    }
+//}
+
+public class TicketResponseDTO {
+    private Long id;
+    private String title;
+    private String description;
+    private String status;
+    private String createdBy;
+    private String assignedTo;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime resolvedAt;
+    private List&lt;CommentResponseDTO&gt; comments;
+<span class="fc" id="L35">    public TicketResponseDTO(Ticket ticket) {</span>
+<span class="fc" id="L36">        this.id = ticket.getId();</span>
+<span class="fc" id="L37">        this.title = ticket.getTitle();</span>
+<span class="fc" id="L38">        this.description = ticket.getDescription();</span>
+<span class="fc" id="L39">        this.status = ticket.getStatus();</span>
+<span class="fc" id="L40">        this.createdBy = ticket.getCreatedBy().getUsername();  // Access inside service when session is open</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        this.assignedTo = ticket.getAssignedTo() != null ? ticket.getAssignedTo().getUsername() : null;</span>
+<span class="fc" id="L42">        this.createdAt = ticket.getCreatedAt();</span>
+<span class="fc" id="L43">        this.updatedAt = ticket.getUpdatedAt();</span>
+<span class="fc" id="L44">        this.resolvedAt = ticket.getResolvedAt();</span>
+
+<span class="fc" id="L46">        this.comments = ticket.getComments().stream()</span>
+<span class="fc" id="L47">                .map(CommentResponseDTO::new)</span>
+<span class="fc" id="L48">                .collect(Collectors.toList());</span>
+<span class="fc" id="L49">    }</span>
+
+    public List&lt;CommentResponseDTO&gt; getComments() {
+<span class="nc" id="L52">        return comments;</span>
+    }
+
+    public void setComments(List&lt;CommentResponseDTO&gt; comments) {
+<span class="nc" id="L56">        this.comments = comments;</span>
+<span class="nc" id="L57">    }</span>
+
+    public Long getId() {
+<span class="nc" id="L60">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="nc" id="L64">        this.id = id;</span>
+<span class="nc" id="L65">    }</span>
+
+    public String getTitle() {
+<span class="fc" id="L68">        return title;</span>
+    }
+
+    public void setTitle(String title) {
+<span class="nc" id="L72">        this.title = title;</span>
+<span class="nc" id="L73">    }</span>
+
+    public String getDescription() {
+<span class="nc" id="L76">        return description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="nc" id="L80">        this.description = description;</span>
+<span class="nc" id="L81">    }</span>
+
+    public String getStatus() {
+<span class="fc" id="L84">        return status;</span>
+    }
+
+    public void setStatus(String status) {
+<span class="nc" id="L88">        this.status = status;</span>
+<span class="nc" id="L89">    }</span>
+
+    public String getCreatedBy() {
+<span class="nc" id="L92">        return createdBy;</span>
+    }
+
+    public void setCreatedBy(String createdBy) {
+<span class="nc" id="L96">        this.createdBy = createdBy;</span>
+<span class="nc" id="L97">    }</span>
+
+    public String getAssignedTo() {
+<span class="nc" id="L100">        return assignedTo;</span>
+    }
+
+    public void setAssignedTo(String assignedTo) {
+<span class="nc" id="L104">        this.assignedTo = assignedTo;</span>
+<span class="nc" id="L105">    }</span>
+
+    public LocalDateTime getCreatedAt() {
+<span class="nc" id="L108">        return createdAt;</span>
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+<span class="nc" id="L112">        this.createdAt = createdAt;</span>
+<span class="nc" id="L113">    }</span>
+
+    public LocalDateTime getUpdatedAt() {
+<span class="fc" id="L116">        return updatedAt;</span>
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+<span class="nc" id="L120">        this.updatedAt = updatedAt;</span>
+<span class="nc" id="L121">    }</span>
+
+    public LocalDateTime getResolvedAt() {
+<span class="fc" id="L124">        return resolvedAt;</span>
+    }
+
+    public void setResolvedAt(LocalDateTime resolvedAt) {
+<span class="nc" id="L128">        this.resolvedAt = resolvedAt;</span>
+<span class="nc" id="L129">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

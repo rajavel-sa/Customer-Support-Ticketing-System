@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommentResponseDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSTS</a> &gt; <a href="index.source.html" class="el_package">com.Eval_Task.CSTS.dto</a> &gt; <span class="el_source">CommentResponseDTO.java</span></div><h1>CommentResponseDTO.java</h1><pre class="source lang-java linenums">package com.Eval_Task.CSTS.dto;
+
+import com.Eval_Task.CSTS.model.Comment;
+
+import java.time.LocalDateTime;
+
+public class CommentResponseDTO {
+    private Long id;
+    private String content;
+    private String username;
+    private LocalDateTime createdAt;
+
+<span class="fc" id="L13">    public CommentResponseDTO(Comment comment) {</span>
+<span class="fc" id="L14">        this.id = comment.getId();</span>
+<span class="fc" id="L15">        this.content = comment.getContent();</span>
+<span class="fc" id="L16">        this.username = comment.getUser().getUsername(); // Get inside transaction</span>
+<span class="fc" id="L17">        this.createdAt = comment.getCreatedAt();</span>
+<span class="fc" id="L18">    }</span>
+
+    public Long getId() {
+<span class="nc" id="L21">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="nc" id="L25">        this.id = id;</span>
+<span class="nc" id="L26">    }</span>
+
+    public String getContent() {
+<span class="fc" id="L29">        return content;</span>
+    }
+
+    public void setContent(String content) {
+<span class="nc" id="L33">        this.content = content;</span>
+<span class="nc" id="L34">    }</span>
+
+    public String getUsername() {
+<span class="fc" id="L37">        return username;</span>
+    }
+
+    public void setUsername(String username) {
+<span class="nc" id="L41">        this.username = username;</span>
+<span class="nc" id="L42">    }</span>
+
+    public LocalDateTime getCreatedAt() {
+<span class="nc" id="L45">        return createdAt;</span>
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+<span class="nc" id="L49">        this.createdAt = createdAt;</span>
+<span class="nc" id="L50">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
