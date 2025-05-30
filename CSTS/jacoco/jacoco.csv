@@ -1,0 +1,24 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+CSTS,com.Eval_Task.CSTS.service.impl,UserServiceImpl.new HashMap() {...},0,35,0,0,0,4,0,1,0,1
+CSTS,com.Eval_Task.CSTS.service.impl,ScheduledTasks,0,161,0,10,0,35,0,9,0,4
+CSTS,com.Eval_Task.CSTS.service.impl,UserServiceImpl,83,281,5,5,10,52,4,9,1,7
+CSTS,com.Eval_Task.CSTS.service.impl,TicketServiceImpl,94,373,5,7,16,79,6,13,2,11
+CSTS,com.Eval_Task.CSTS.service.impl,AuthServiceImpl,14,189,1,5,3,42,1,9,0,7
+CSTS,com.Eval_Task.CSTS.dto,UserResponseDTO,31,25,0,0,12,8,9,1,9,1
+CSTS,com.Eval_Task.CSTS.dto,CommentRequest,7,9,0,0,4,4,2,2,2,2
+CSTS,com.Eval_Task.CSTS.dto,UserDto,14,17,0,0,6,7,4,5,4,5
+CSTS,com.Eval_Task.CSTS.dto,TicketSummaryDTO,16,27,0,0,8,10,4,5,4,5
+CSTS,com.Eval_Task.CSTS.dto,TicketRequest,10,17,0,0,5,8,2,5,2,5
+CSTS,com.Eval_Task.CSTS.dto,TicketResponseDTO,61,65,0,2,27,17,17,5,17,4
+CSTS,com.Eval_Task.CSTS.dto,CommentResponseDTO,22,26,0,0,10,8,6,3,6,3
+CSTS,com.Eval_Task.CSTS.config,JwtGeneratorValidator,157,6,4,0,30,2,14,1,12,1
+CSTS,com.Eval_Task.CSTS.config,SecurityConfig,37,24,0,0,10,7,2,4,2,4
+CSTS,com.Eval_Task.CSTS.config,JwtFilter,63,3,10,0,15,1,6,1,1,1
+CSTS,com.Eval_Task.CSTS,CstsApplication,5,3,0,0,2,1,1,1,1,1
+CSTS,com.Eval_Task.CSTS.model,Role,7,16,0,0,3,7,2,4,2,4
+CSTS,com.Eval_Task.CSTS.model,User,36,48,0,0,11,19,3,11,3,11
+CSTS,com.Eval_Task.CSTS.model,Comment,0,41,0,0,0,17,0,11,0,11
+CSTS,com.Eval_Task.CSTS.model,Ticket,30,77,0,0,9,32,2,20,2,20
+CSTS,com.Eval_Task.CSTS.controller,UserController,16,0,0,0,4,0,4,0,4,0
+CSTS,com.Eval_Task.CSTS.controller,TicketController,29,3,0,0,6,1,6,1,6,1
+CSTS,com.Eval_Task.CSTS.controller,AuthController,13,3,0,0,2,1,2,1,2,1

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSTS</a> &gt; <a href="index.source.html" class="el_package">com.Eval_Task.CSTS.service.impl</a> &gt; <span class="el_source">UserServiceImpl.java</span></div><h1>UserServiceImpl.java</h1><pre class="source lang-java linenums">package com.Eval_Task.CSTS.service.impl;
+
+import com.Eval_Task.CSTS.dto.TicketSummaryDTO;
+import com.Eval_Task.CSTS.dto.UserResponseDTO;
+import com.Eval_Task.CSTS.model.Ticket;
+import com.Eval_Task.CSTS.model.User;
+import com.Eval_Task.CSTS.repository.TicketRepository;
+import com.Eval_Task.CSTS.repository.UserRepository;
+import com.Eval_Task.CSTS.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.time.Duration;
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Service
+<span class="fc" id="L20">public class UserServiceImpl implements UserService {</span>
+
+    @Autowired private UserRepository userRepository;
+    @Autowired private TicketRepository ticketRepository;
+
+    private ResponseEntity&lt;Object&gt; generateResponse(String message, HttpStatus status, Object data) {
+<span class="fc" id="L26">        return ResponseEntity.status(status).body(</span>
+<span class="fc" id="L27">                new java.util.HashMap&lt;String, Object&gt;() {{</span>
+<span class="fc" id="L28">                    put(&quot;message&quot;, message);</span>
+<span class="fc" id="L29">                    put(&quot;status&quot;, status.value());</span>
+<span class="fc" id="L30">                    put(&quot;data&quot;, data);</span>
+                }}
+        );
+    }
+
+    @Override
+    public ResponseEntity&lt;Object&gt; getAllAgents() {
+        try {
+<span class="fc" id="L38">            List&lt;User&gt; agents = userRepository.findAllAgents();</span>
+
+<span class="fc" id="L40">            List&lt;Map&lt;String, Object&gt;&gt; agentData = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            for (User agent : agents) {</span>
+<span class="fc" id="L43">                Map&lt;String, Object&gt; agentInfo = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L44">                agentInfo.put(&quot;id&quot;, agent.getId());</span>
+<span class="fc" id="L45">                agentInfo.put(&quot;username&quot;, agent.getUsername());</span>
+
+<span class="fc" id="L47">                Long totalAssigned = ticketRepository.countByAssignedTo(agent);</span>
+<span class="fc" id="L48">                Long resolved = ticketRepository.countByAssignedToAndStatus(agent, &quot;RESOLVED&quot;);</span>
+<span class="fc" id="L49">                Long openOrEscalated = ticketRepository.countByAssignedToAndStatusIn(agent, Arrays.asList(&quot;OPEN&quot;, &quot;ESCALATED&quot;));</span>
+
+<span class="fc" id="L51">                agentInfo.put(&quot;assignedCount&quot;, totalAssigned);</span>
+<span class="fc" id="L52">                agentInfo.put(&quot;assignedButNotResolved&quot;, openOrEscalated);</span>
+<span class="fc" id="L53">                agentInfo.put(&quot;resolvedCount&quot;, resolved);</span>
+
+<span class="fc" id="L55">                agentData.add(agentInfo);</span>
+<span class="fc" id="L56">            }</span>
+
+<span class="fc" id="L58">            agentData.sort((a, b) -&gt; ((Long) b.get(&quot;resolvedCount&quot;)).compareTo((Long) a.get(&quot;resolvedCount&quot;)));</span>
+
+<span class="fc" id="L60">            int rank = 1;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">            for (Map&lt;String, Object&gt; agentInfo : agentData) {</span>
+<span class="fc" id="L62">                agentInfo.put(&quot;rank&quot;, rank++);</span>
+<span class="fc" id="L63">            }</span>
+
+<span class="fc" id="L65">            return generateResponse(&quot;Agents fetched successfully&quot;, HttpStatus.OK, agentData);</span>
+<span class="nc" id="L66">        } catch (Exception e) {</span>
+<span class="nc" id="L67">            e.printStackTrace();</span>
+<span class="nc" id="L68">            return generateResponse(&quot;Error fetching agents: &quot; + e.getMessage(), HttpStatus.BAD_REQUEST, null);</span>
+        }
+    }
+
+    @Override
+    public ResponseEntity&lt;Object&gt; getTicketSummary() {
+        try {
+<span class="fc" id="L75">            long total = ticketRepository.count();</span>
+<span class="fc" id="L76">            long open = ticketRepository.countByStatus(&quot;OPEN&quot;);</span>
+<span class="fc" id="L77">            long assigned = ticketRepository.countByStatus(&quot;ASSIGNED&quot;);</span>
+<span class="fc" id="L78">            long resolved = ticketRepository.countByStatus(&quot;RESOLVED&quot;);</span>
+
+<span class="fc" id="L80">            TicketSummaryDTO summary = new TicketSummaryDTO(total, open, assigned, resolved);</span>
+
+<span class="fc" id="L82">            return generateResponse(&quot;Ticket summary fetched successfully&quot;, HttpStatus.OK, summary);</span>
+<span class="nc" id="L83">        } catch (Exception e) {</span>
+<span class="nc" id="L84">            e.printStackTrace();</span>
+<span class="nc" id="L85">            return generateResponse(&quot;Error fetching ticket summary: &quot; + e.getMessage(), HttpStatus.BAD_REQUEST, null);</span>
+        }
+    }
+
+    @Override
+    public ResponseEntity&lt;Object&gt; getUserProfile(Long id) {
+        try {
+<span class="fc" id="L92">            User user = userRepository.findById(id)</span>
+<span class="fc" id="L93">                    .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</span>
+
+<span class="fc" id="L95">            UserResponseDTO dto = new UserResponseDTO(user);</span>
+
+<span class="fc" id="L97">            long ticketsAssigned = 0;</span>
+<span class="fc" id="L98">            long ticketsResolved = 0;</span>
+<span class="fc" id="L99">            long ticketsRaised = 0;</span>
+<span class="fc" id="L100">            long ticketsUnresolved = 0;</span>
+
+<span class="fc" id="L102">            boolean isAgentOrAdmin = user.getRole().stream()</span>
+<span class="pc bnc" id="L103" title="All 4 branches missed.">                    .anyMatch(role -&gt; role.getRole().equals(&quot;ROLE_AGENT&quot;) || role.getRole().equals(&quot;ROLE_ADMIN&quot;));</span>
+
+<span class="fc" id="L105">            Map&lt;String, Object&gt; extraData = new HashMap&lt;&gt;();</span>
+
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">            if (isAgentOrAdmin) {</span>
+<span class="nc" id="L108">                ticketsAssigned = ticketRepository.countByAssignedToAndStatusIn(user, Arrays.asList(&quot;OPEN&quot;, &quot;ESCALATED&quot;));</span>
+<span class="nc" id="L109">                ticketsResolved = ticketRepository.countByAssignedToAndStatus(user, &quot;RESOLVED&quot;);</span>
+<span class="nc" id="L110">                extraData.put(&quot;ticketsAssigned&quot;, ticketsAssigned);</span>
+<span class="nc" id="L111">                extraData.put(&quot;ticketsResolved&quot;, ticketsResolved);</span>
+            } else {
+<span class="fc" id="L113">                ticketsRaised = ticketRepository.countByCreatedBy(user);</span>
+<span class="fc" id="L114">                ticketsResolved = ticketRepository.countByCreatedByAndStatus(user, &quot;RESOLVED&quot;);</span>
+<span class="fc" id="L115">                ticketsUnresolved = ticketRepository.countByCreatedByAndStatusNot(user, &quot;RESOLVED&quot;);</span>
+<span class="fc" id="L116">                extraData.put(&quot;ticketsRaised&quot;, ticketsRaised);</span>
+//                extraData.put(&quot;tickets Resolved&quot;, ticketsResolved);// raised-unresolved check pannanum
+<span class="fc" id="L118">                extraData.put(&quot;ticketsUnresolved&quot;, ticketsUnresolved);</span>
+<span class="fc" id="L119">                extraData.put(&quot;ticketsResolved&quot;, ticketsRaised-ticketsResolved);</span>
+            }
+
+<span class="fc" id="L122">            Map&lt;String, Object&gt; finalResponse = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L123">            finalResponse.put(&quot;user&quot;, dto);</span>
+<span class="fc" id="L124">            finalResponse.put(&quot;summary&quot;, extraData);</span>
+
+<span class="fc" id="L126">            return generateResponse(&quot;User profile fetched successfully&quot;, HttpStatus.OK, finalResponse);</span>
+<span class="fc" id="L127">        } catch (Exception e) {</span>
+<span class="fc" id="L128">            e.printStackTrace();</span>
+<span class="fc" id="L129">            return generateResponse(&quot;Error fetching user profile: &quot; + e.getMessage(), HttpStatus.NOT_FOUND, null);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

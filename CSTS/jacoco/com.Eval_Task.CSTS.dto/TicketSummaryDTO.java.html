@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketSummaryDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSTS</a> &gt; <a href="index.source.html" class="el_package">com.Eval_Task.CSTS.dto</a> &gt; <span class="el_source">TicketSummaryDTO.java</span></div><h1>TicketSummaryDTO.java</h1><pre class="source lang-java linenums">package com.Eval_Task.CSTS.dto;
+
+public class TicketSummaryDTO {
+    private long totalTickets;
+    private long openTickets;
+    private long assignedTickets;
+    private long resolvedTickets;
+
+<span class="fc" id="L9">    public TicketSummaryDTO(long total, long open, long assigned, long resolved) {</span>
+<span class="fc" id="L10">        this.totalTickets = total;</span>
+<span class="fc" id="L11">        this.openTickets = open;</span>
+<span class="fc" id="L12">        this.assignedTickets = assigned;</span>
+<span class="fc" id="L13">        this.resolvedTickets = resolved;</span>
+<span class="fc" id="L14">    }</span>
+
+    public long getTotalTickets() {
+<span class="fc" id="L17">        return totalTickets;</span>
+    }
+
+    public void setTotalTickets(long totalTickets) {
+<span class="nc" id="L21">        this.totalTickets = totalTickets;</span>
+<span class="nc" id="L22">    }</span>
+
+    public long getResolvedTickets() {
+<span class="fc" id="L25">        return resolvedTickets;</span>
+    }
+
+    public void setResolvedTickets(long resolvedTickets) {
+<span class="nc" id="L29">        this.resolvedTickets = resolvedTickets;</span>
+<span class="nc" id="L30">    }</span>
+
+    public long getOpenTickets() {
+<span class="fc" id="L33">        return openTickets;</span>
+    }
+
+    public void setOpenTickets(long openTickets) {
+<span class="nc" id="L37">        this.openTickets = openTickets;</span>
+<span class="nc" id="L38">    }</span>
+
+    public long getAssignedTickets() {
+<span class="fc" id="L41">        return assignedTickets;</span>
+    }
+
+    public void setAssignedTickets(long assignedTickets) {
+<span class="nc" id="L45">        this.assignedTickets = assignedTickets;</span>
+<span class="nc" id="L46">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
